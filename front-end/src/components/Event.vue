@@ -34,6 +34,11 @@
                       class="form-control"
                       type="date"
                       v-model="reminderDate"
+                      :class="{
+                        'is-invalid': this.reminderDateTimeValidationError,
+                      }"
+                      data-toggle="tooltip"
+                      :title="this.reminderDateTimeValidationError"
                       required
                     />
                   </div>
@@ -42,6 +47,11 @@
                       class="form-control text-center"
                       type="time"
                       v-model="reminderTime"
+                      :class="{
+                        'is-invalid': this.reminderDateTimeValidationError,
+                      }"
+                      data-toggle="tooltip"
+                      :title="this.reminderDateTimeValidationError"
                       required
                     />
                   </div>
@@ -67,6 +77,7 @@
                 <div class="row mt-2">
                   <div class="col-12 btn-group d-flex" role="group">
                     <button
+                      :disabled="invalid"
                       type="submit"
                       class="btn btn-primary"
                       @click="handleSubmit"
@@ -100,9 +111,44 @@ export default defineComponent({
       eventDate: zonedTimeToUtc("2021-12-17 18:00:00.000", "Europe/Berlin"),
       reminderDate: "",
       reminderTime: "13:00",
+      reminderDateTimeValidationError: "",
       reminderDays: 5,
       reminderEmail: "",
     };
+  },
+
+  watch: {
+    reminderDate() {
+      this.validateReminderDateTime();
+
+      const reminderDays = this.calculateReminderDays();
+
+      if (this.reminderDays === reminderDays) {
+        return;
+      }
+
+      this.reminderDays = reminderDays;
+    },
+
+    reminderTime() {
+      this.validateReminderDateTime();
+    },
+
+    reminderDays() {
+      const reminderDate = this.calculateReminderDate();
+
+      if (this.reminderDate === reminderDate) {
+        return;
+      }
+
+      this.reminderDate = reminderDate;
+    },
+  },
+
+  computed: {
+    invalid(): boolean {
+      return this.reminderDateTimeValidationError.length > 0;
+    },
   },
 
   methods: {
@@ -121,34 +167,36 @@ export default defineComponent({
     },
 
     handleSubmit() {
-      console.log(this.reminderTime);
+      this.validateReminderDateTime();
+
+      if (this.invalid) {
+        return;
+      }
+
+      console.log("submitting form values...");
+    },
+
+    validateReminderDateTime() {
+      const reminderDate = parseISO(this.reminderDate);
+      const reminderHours = parseInt(this.reminderTime.split(":")[0]);
+      const reminderMinutes = parseInt(this.reminderTime.split(":")[1]);
+      reminderDate.setHours(reminderHours);
+      reminderDate.setMinutes(reminderMinutes);
+
+      this.reminderDateTimeValidationError = "";
+
+      if (reminderDate <= new Date()) {
+        this.reminderDateTimeValidationError =
+          "The reminder date must be past the current date and time";
+      } else if (reminderDate > this.eventDate) {
+        this.reminderDateTimeValidationError =
+          "The reminder date cannot be past the event date";
+      }
     },
   },
 
   mounted() {
     this.reminderDate = this.calculateReminderDate();
-  },
-
-  watch: {
-    reminderDate() {
-      const reminderDays = this.calculateReminderDays();
-
-      if (this.reminderDays === reminderDays) {
-        return;
-      }
-
-      this.reminderDays = reminderDays;
-    },
-
-    reminderDays() {
-      const reminderDate = this.calculateReminderDate();
-
-      if (this.reminderDate === reminderDate) {
-        return;
-      }
-
-      this.reminderDate = reminderDate;
-    },
   },
 });
 </script>
