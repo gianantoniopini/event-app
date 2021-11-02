@@ -86,14 +86,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { format } from "date-fns";
+import add from "date-fns/add";
+import parseISO from "date-fns/parseISO";
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 export default defineComponent({
   name: "Event",
 
   data() {
     return {
-      eventDate: new Date(2021, 11, 17, 18, 0, 0, 0),
-      now: new Date(),
+      eventDate: zonedTimeToUtc("2021-12-17 18:00:00.000", "Europe/Berlin"),
       reminderDate: "",
       reminderTime: "13:00",
       reminderDays: 5,
@@ -103,36 +107,15 @@ export default defineComponent({
 
   methods: {
     calculateReminderDate() {
-      const reminderDate = new Date(this.now.getTime());
+      const reminderDate = add(new Date(), { days: this.reminderDays });
 
-      reminderDate.setDate(reminderDate.getDate() + this.reminderDays);
-
-      // we need to build a date string with format YYYY-MM-DD in order for binding to input with type="date" to work
-      // TODO: consider moving this to separate method, or use external package
-      const reminderDateMonth = reminderDate.getMonth() + 1;
-      const reminderDateMonthString =
-        reminderDateMonth < 10
-          ? `0${reminderDateMonth}`
-          : reminderDateMonth.toString();
-      const reminderDateDay = reminderDate.getDate();
-      const reminderDateDayString =
-        reminderDateDay < 10
-          ? `0${reminderDateDay}`
-          : reminderDateDay.toString();
-
-      return `${reminderDate.getFullYear()}-${reminderDateMonthString}-${reminderDateDayString}`;
+      return format(reminderDate, "yyyy-MM-dd");
     },
 
     calculateReminderDays() {
-      const fullYear = parseInt(this.reminderDate.substring(0, 4));
-      const month = parseInt(this.reminderDate.substring(5, 7)) - 1;
-      const day = parseInt(this.reminderDate.substring(8));
-      const reminderDate = new Date(fullYear, month, day, 0, 0, 0, 0);
+      const reminderDate = parseISO(this.reminderDate);
 
-      const reminderTime = Math.abs(
-        reminderDate.getTime() - this.now.getTime()
-      );
-      const reminderDays = Math.ceil(reminderTime / (1000 * 60 * 60 * 24));
+      const reminderDays = differenceInCalendarDays(reminderDate, new Date());
 
       return reminderDays;
     },
