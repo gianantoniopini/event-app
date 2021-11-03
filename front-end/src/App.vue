@@ -1,15 +1,15 @@
 <template>
-  <Event />
+  <EventReminder />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Event from "./components/Event.vue";
+import EventReminder from "./components/EventReminder.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    Event,
+    EventReminder,
   },
 });
 </script>

@@ -104,7 +104,7 @@ import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 export default defineComponent({
-  name: "Event",
+  name: "EventReminder",
 
   data() {
     return {
@@ -185,12 +185,12 @@ export default defineComponent({
 
       this.reminderDateTimeValidationError = "";
 
-      if (reminderDate <= new Date()) {
-        this.reminderDateTimeValidationError =
-          "The reminder date must be past the current date and time";
-      } else if (reminderDate > this.eventDate) {
+      if (reminderDate > this.eventDate) {
         this.reminderDateTimeValidationError =
           "The reminder date cannot be past the event date";
+      } else if (reminderDate <= new Date()) {
+        this.reminderDateTimeValidationError =
+          "The reminder date cannot be in the past";
       }
     },
   },
