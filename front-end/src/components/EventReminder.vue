@@ -15,7 +15,10 @@
             <div class="row">
               <div class="col-12">
                 <div>Event Date</div>
-                <div>{{ eventDate }}</div>
+                <div>{{ eventDateFormattedLong }}</div>
+                <div>
+                  {{ eventDateFormattedShort }} | {{ eventTimeFormatted }}
+                </div>
               </div>
             </div>
             <div class="row mt-5">
@@ -101,14 +104,21 @@ import { format } from "date-fns";
 import add from "date-fns/add";
 import parseISO from "date-fns/parseISO";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import { zonedTimeToUtc } from "date-fns-tz";
+import {
+  zonedTimeToUtc,
+  format as tzFormat,
+  utcToZonedTime,
+} from "date-fns-tz";
 
 export default defineComponent({
   name: "EventReminder",
 
   data() {
     return {
-      eventDate: zonedTimeToUtc("2021-12-17 18:00:00.000", "Europe/Berlin"),
+      eventDateTime: new Date(),
+      eventDateFormattedLong: "",
+      eventDateFormattedShort: "",
+      eventTimeFormatted: "",
       reminderDate: "",
       reminderTime: "13:00",
       reminderDateTimeValidationError: "",
@@ -176,19 +186,45 @@ export default defineComponent({
       console.log("submitting form values...");
     },
 
+    setEventDateTime() {
+      const eventTimeZone = "Europe/Berlin";
+      this.eventDateTime = zonedTimeToUtc(
+        "2021-12-17 18:00:00.000",
+        eventTimeZone
+      );
+
+      const zonedEventDateTime = utcToZonedTime(
+        this.eventDateTime.getTime(),
+        eventTimeZone
+      );
+
+      this.eventDateFormattedLong = tzFormat(
+        zonedEventDateTime.getTime(),
+        "EEEE, MMM dd yyyy"
+      );
+      this.eventDateFormattedShort = tzFormat(
+        zonedEventDateTime.getTime(),
+        "EEE dd. MMM"
+      );
+      this.eventTimeFormatted = tzFormat(
+        zonedEventDateTime.getTime(),
+        "HH:mm aa"
+      );
+    },
+
     validateReminderDateTime() {
-      const reminderDate = parseISO(this.reminderDate);
+      const reminderDateTime = parseISO(this.reminderDate);
       const reminderHours = parseInt(this.reminderTime.split(":")[0]);
       const reminderMinutes = parseInt(this.reminderTime.split(":")[1]);
-      reminderDate.setHours(reminderHours);
-      reminderDate.setMinutes(reminderMinutes);
+      reminderDateTime.setHours(reminderHours);
+      reminderDateTime.setMinutes(reminderMinutes);
 
       this.reminderDateTimeValidationError = "";
 
-      if (reminderDate > this.eventDate) {
+      if (reminderDateTime > this.eventDateTime) {
         this.reminderDateTimeValidationError =
           "The reminder date cannot be past the event date";
-      } else if (reminderDate <= new Date()) {
+      } else if (reminderDateTime <= new Date()) {
         this.reminderDateTimeValidationError =
           "The reminder date cannot be in the past";
       }
@@ -196,6 +232,7 @@ export default defineComponent({
   },
 
   mounted() {
+    this.setEventDateTime();
     this.reminderDate = this.calculateReminderDate();
   },
 });
