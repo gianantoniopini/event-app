@@ -38,12 +38,15 @@
                       type="date"
                       v-model="reminderDate"
                       :class="{
-                        'is-invalid': this.reminderDateTimeValidationError,
+                        'is-invalid': this.validationErrors.reminderDateTime,
                       }"
                       data-toggle="tooltip"
-                      :title="this.reminderDateTimeValidationError"
+                      :title="this.validationErrors.reminderDateTime"
                       required
                     />
+                    <div class="invalid-feedback">
+                      {{ this.validationErrors.reminderDateTime }}
+                    </div>
                   </div>
                   <div class="col-sm-4 col-lg-3 mt-2">
                     <input
@@ -51,10 +54,10 @@
                       type="time"
                       v-model="reminderTime"
                       :class="{
-                        'is-invalid': this.reminderDateTimeValidationError,
+                        'is-invalid': this.validationErrors.reminderDateTime,
                       }"
                       data-toggle="tooltip"
-                      :title="this.reminderDateTimeValidationError"
+                      :title="this.validationErrors.reminderDateTime"
                       required
                     />
                   </div>
@@ -77,10 +80,18 @@
                   <div class="col-12">
                     <input
                       class="form-control"
-                      type="email"
+                      type="text"
                       v-model="reminderEmail"
+                      :class="{
+                        'is-invalid': this.validationErrors.reminderEmail,
+                      }"
+                      data-toggle="tooltip"
+                      :title="this.validationErrors.reminderEmail"
                       placeholder="Enter your email"
                     />
+                    <div class="invalid-feedback">
+                      {{ this.validationErrors.reminderEmail }}
+                    </div>
                   </div>
                 </div>
                 <div class="row mt-2">
@@ -127,9 +138,12 @@ export default defineComponent({
       eventTimeFormatted: "",
       reminderDate: "",
       reminderTime: "13:00",
-      reminderDateTimeValidationError: "",
       reminderDays: 5,
       reminderEmail: "",
+      validationErrors: {
+        reminderDateTime: "",
+        reminderEmail: "",
+      },
     };
   },
 
@@ -159,11 +173,18 @@ export default defineComponent({
 
       this.reminderDate = reminderDate;
     },
+
+    reminderEmail() {
+      this.validateReminderEmail();
+    },
   },
 
   computed: {
     invalid(): boolean {
-      return this.reminderDateTimeValidationError.length > 0;
+      return (
+        this.validationErrors.reminderDateTime.length > 0 ||
+        this.validationErrors.reminderEmail.length > 0
+      );
     },
   },
 
@@ -184,6 +205,7 @@ export default defineComponent({
 
     handleSubmit() {
       this.validateReminderDateTime();
+      this.validateReminderEmail();
 
       if (this.invalid) {
         return;
@@ -225,14 +247,29 @@ export default defineComponent({
       reminderDateTime.setHours(reminderHours);
       reminderDateTime.setMinutes(reminderMinutes);
 
-      this.reminderDateTimeValidationError = "";
+      this.validationErrors.reminderDateTime = "";
 
       if (reminderDateTime > this.eventDateTime) {
-        this.reminderDateTimeValidationError =
+        this.validationErrors.reminderDateTime =
           "The reminder date cannot be past the event date";
       } else if (reminderDateTime <= new Date()) {
-        this.reminderDateTimeValidationError =
+        this.validationErrors.reminderDateTime =
           "The reminder date cannot be in the past";
+      }
+    },
+
+    validateReminderEmail() {
+      this.validationErrors.reminderEmail = "";
+
+      if (!this.reminderEmail) {
+        this.validationErrors.reminderEmail = "Email must be provided";
+      } else {
+        const regExp = new RegExp(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+        if (!regExp.test(this.reminderEmail)) {
+          this.validationErrors.reminderEmail = "Please enter a valid email";
+        }
       }
     },
   },
