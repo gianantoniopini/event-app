@@ -3,31 +3,32 @@
     <div class="row">
       <div class="col-8 offset-2">
         <div class="row">
-          <div class="col-12">
+          <div class="col-sm-12 col-lg-5">
             <div class="row">
-              <div class="col-sm-12 col-lg-5">
-                <div class="fw-light">Letzigrund Station, Zurich</div>
-                <div class="row">
-                  <div class="col-12">
-                    <span class="fs-3 text-nowrap">The Rolling Stones</span>
-                    <span
-                      class="rounded bg-primary text-white text-nowrap m-1 p-1"
-                    >
-                      top event
-                    </span>
-                  </div>
-                </div>
-                <div class="mt-4">
-                  The stones roll through Europe this winter - The Rolling
-                  Stones will play at the Letzigrund stadium on
-                  {{ eventDateFormattedLong }}. On their "On Fire" tour, they
-                  will also make a stop in Zurich at the beginning of the
-                  winter... A heater and ticket prices are not yet known, We
-                  will inform you here and on social media. So check back from
-                  time to time.
-                </div>
+              <div class="col-12 fw-light">Letzigrund Station, Zurich</div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <span class="fs-3 text-nowrap">The Rolling Stones</span>
+                <span class="rounded bg-primary text-white text-nowrap m-1 p-1">
+                  top event
+                </span>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-12">
+                The stones roll through Europe this winter - The Rolling Stones
+                will play at the Letzigrund stadium on
+                {{ eventDateFormattedLong }}. On their "On Fire" tour, they will
+                also make a stop in Zurich at the beginning of the winter... A
+                heater and ticket prices are not yet known. We will inform you
+                here and on social media. So check back from time to time.
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
                 <div class="container-fluid rounded text-white bg-dark mt-5">
-                  <div class="row pt-3">
+                  <div class="row pt-4">
                     <div class="col-12 text-uppercase">Event Date</div>
                   </div>
                   <div class="row pb-4">
@@ -37,102 +38,102 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-2"></div>
-              <div class="col-sm-12 col-lg-5 mt-2">
-                <img
-                  src="../assets/disco-lights-small.jpg"
-                  class="img-fluid rounded float-right"
-                />
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <hr />
-              </div>
-            </div>
-            <div class="row mt-5">
-              <form @submit.prevent="onSubmit" class="col-12 form">
-                <div class="row">
-                  <div class="col-12 fw-bold">Set a check back reminder</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-8 col-lg-4 mt-2">
-                    <input
-                      class="form-control"
-                      type="date"
-                      v-model="reminderDate"
-                      :class="{
-                        'is-invalid': this.validationErrors.reminderDateTime,
-                      }"
-                      data-toggle="tooltip"
-                      :title="this.validationErrors.reminderDateTime"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      {{ this.validationErrors.reminderDateTime }}
-                    </div>
-                  </div>
-                  <div class="col-sm-4 col-lg-3 mt-2">
-                    <input
-                      class="form-control text-center"
-                      type="time"
-                      v-model="reminderTime"
-                      :class="{
-                        'is-invalid': this.validationErrors.reminderDateTime,
-                      }"
-                      data-toggle="tooltip"
-                      :title="this.validationErrors.reminderDateTime"
-                      required
-                    />
-                  </div>
-                  <div class="col-sm-12 col-lg-5 mt-2">
-                    <div class="row">
-                      <div class="col-2 align-self-center text-end">in</div>
-                      <div class="col-4">
-                        <input
-                          class="form-control text-center"
-                          type="number"
-                          v-model="reminderDays"
-                          required
-                        />
-                      </div>
-                      <div class="col-6 align-self-center">Days</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="reminderEmail"
-                      :class="{
-                        'is-invalid': this.validationErrors.reminderEmail,
-                      }"
-                      data-toggle="tooltip"
-                      :title="this.validationErrors.reminderEmail"
-                      placeholder="Enter your email"
-                    />
-                    <div class="invalid-feedback">
-                      {{ this.validationErrors.reminderEmail }}
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12 btn-group d-flex" role="group">
-                    <button
-                      :disabled="invalid"
-                      type="submit"
-                      class="btn btn-primary"
-                      @click="handleSubmit"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </div>
+          <div class="col-lg-2"></div>
+          <div class="col-sm-12 col-lg-5 mt-2 d-flex justify-content-lg-end">
+            <img
+              src="../assets/disco-lights-small-resized.jpg"
+              class="img-fluid rounded"
+            />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12">
+            <hr />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <form @submit.prevent="onSubmit" class="col-12 form">
+            <div class="row">
+              <div class="col-12 fw-bold">Set a check back reminder</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-lg-4 mt-2">
+                <input
+                  class="form-control"
+                  type="date"
+                  v-model="reminderDate"
+                  :class="{
+                    'is-invalid': this.validationErrors.reminderDateTime,
+                  }"
+                  data-toggle="tooltip"
+                  :title="this.validationErrors.reminderDateTime"
+                  required
+                />
+                <div class="invalid-feedback">
+                  {{ this.validationErrors.reminderDateTime }}
+                </div>
+              </div>
+              <div class="col-sm-4 col-lg-3 mt-2">
+                <input
+                  class="form-control text-center"
+                  type="time"
+                  v-model="reminderTime"
+                  :class="{
+                    'is-invalid': this.validationErrors.reminderDateTime,
+                  }"
+                  data-toggle="tooltip"
+                  :title="this.validationErrors.reminderDateTime"
+                  required
+                />
+              </div>
+              <div class="col-sm-12 col-lg-5 mt-2">
+                <div class="row">
+                  <div class="col-2 align-self-center text-end">in</div>
+                  <div class="col-4">
+                    <input
+                      class="form-control text-center"
+                      type="number"
+                      v-model="reminderDays"
+                      required
+                    />
+                  </div>
+                  <div class="col-6 align-self-center">Days</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12">
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="reminderEmail"
+                  :class="{
+                    'is-invalid': this.validationErrors.reminderEmail,
+                  }"
+                  data-toggle="tooltip"
+                  :title="this.validationErrors.reminderEmail"
+                  placeholder="Enter your email"
+                />
+                <div class="invalid-feedback">
+                  {{ this.validationErrors.reminderEmail }}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12 btn-group d-flex" role="group">
+                <button
+                  :disabled="invalid"
+                  type="submit"
+                  class="btn btn-primary"
+                  @click="handleSubmit"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
