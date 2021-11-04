@@ -1,16 +1,48 @@
 <template>
   <div class="container-fluid">
-    <div class="row mt-4">
+    <div class="row">
       <div class="col-8 offset-2">
         <div class="row">
           <div class="col-12">
             <div class="row">
-              <div class="col-12">
-                <div>Event Date</div>
-                <div>{{ eventDateFormattedLong }}</div>
-                <div>
-                  {{ eventDateFormattedShort }} | {{ eventTimeFormatted }}
+              <div class="col-sm-12 col-lg-5">
+                <div class="fw-light">Letzigrund Station, Zurich</div>
+                <div class="row">
+                  <div class="col-12">
+                    <span class="fs-3 text-nowrap">The Rolling Stones</span>
+                    <span
+                      class="rounded bg-primary text-white text-nowrap m-1 p-1"
+                    >
+                      top event
+                    </span>
+                  </div>
                 </div>
+                <div class="mt-4">
+                  The stones roll through Europe this winter - The Rolling
+                  Stones will play at the Letzigrund stadium on
+                  {{ eventDateFormattedLong }}. On their "On Fire" tour, they
+                  will also make a stop in Zurich at the beginning of the
+                  winter... A heater and ticket prices are not yet known, We
+                  will inform you here and on social media. So check back from
+                  time to time.
+                </div>
+                <div class="container-fluid rounded text-white bg-dark mt-5">
+                  <div class="row pt-3">
+                    <div class="col-12 text-uppercase">Event Date</div>
+                  </div>
+                  <div class="row pb-4">
+                    <div class="col-12 fw-bold">
+                      {{ eventDateFormattedShort }} | {{ eventTimeFormatted }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2"></div>
+              <div class="col-sm-12 col-lg-5 mt-2">
+                <img
+                  src="../assets/disco-lights-small.jpg"
+                  class="img-fluid rounded float-right"
+                />
               </div>
             </div>
             <div class="row mt-5">
