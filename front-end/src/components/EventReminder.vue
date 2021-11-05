@@ -29,13 +29,13 @@
                 here and on social media. So check back from time to time.
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-2 mt-md-5">
               <div class="col-12">
-                <div class="container-fluid rounded text-white bg-dark mt-5">
-                  <div class="row pt-4">
+                <div class="container-fluid rounded text-white bg-dark py-4">
+                  <div class="row">
                     <div class="col-12 text-uppercase">Event Date</div>
                   </div>
-                  <div class="row pb-4">
+                  <div class="row">
                     <div class="col-12 fw-bold">
                       {{ eventDateFormattedShort }} | {{ eventTimeFormatted }}
                     </div>
@@ -45,19 +45,26 @@
             </div>
           </div>
           <div class="col-md-2"></div>
-          <div class="col-sm-12 col-md-5 mt-2 d-flex justify-content-md-end">
+          <div
+            class="
+              col-sm-12 col-md-5
+              mt-2 mt-md-0
+              d-flex
+              justify-content-md-end
+            "
+          >
             <img
               src="../assets/disco-lights-small-resized.jpg"
               class="img-fluid rounded"
             />
           </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-2 mt-md-5">
           <div class="col-12">
             <hr />
           </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-md-5">
           <form @submit.prevent="onSubmit" class="col-12 form">
             <div class="row">
               <div class="col-12 fw-bold">Set a check back reminder</div>
