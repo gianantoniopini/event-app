@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-2">
+  <div class="container-fluid py-2">
     <div class="row">
       <div class="d-flex justify-content-center align-items-center fw-bold">
         Event App

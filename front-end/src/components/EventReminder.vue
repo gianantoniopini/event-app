@@ -1,18 +1,22 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-8 offset-2">
+      <div class="col-sm-12 col-lg-8 offset-lg-2">
         <div class="row">
-          <div class="col-sm-12 col-lg-5">
+          <div class="col-sm-12 col-md-5">
             <div class="row">
               <div class="col-12 fw-light">Letzigrund Station, Zurich</div>
             </div>
             <div class="row">
               <div class="col-12">
-                <span class="fs-3 text-nowrap">The Rolling Stones</span>
-                <span class="rounded bg-primary text-white text-nowrap m-1 p-1">
-                  top event
-                </span>
+                <div class="hstack gap-3">
+                  <span class="fs-3 text-nowrap">The Rolling Stones</span>
+                  <span
+                    class="rounded bg-primary text-white text-nowrap m-1 p-1"
+                  >
+                    top event
+                  </span>
+                </div>
               </div>
             </div>
             <div class="row mt-4">
@@ -40,8 +44,8 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-2"></div>
-          <div class="col-sm-12 col-lg-5 mt-2 d-flex justify-content-lg-end">
+          <div class="col-md-2"></div>
+          <div class="col-sm-12 col-md-5 mt-2 d-flex justify-content-md-end">
             <img
               src="../assets/disco-lights-small-resized.jpg"
               class="img-fluid rounded"
@@ -59,7 +63,7 @@
               <div class="col-12 fw-bold">Set a check back reminder</div>
             </div>
             <div class="row">
-              <div class="col-sm-8 col-lg-4 mt-2">
+              <div class="col-8 col-md-4 mt-2">
                 <input
                   class="form-control"
                   type="date"
@@ -75,7 +79,7 @@
                   {{ this.validationErrors.reminderDateTime }}
                 </div>
               </div>
-              <div class="col-sm-4 col-lg-3 mt-2">
+              <div class="col-4 col-md-3 mt-2">
                 <input
                   class="form-control text-center"
                   type="time"
@@ -88,18 +92,16 @@
                   required
                 />
               </div>
-              <div class="col-sm-12 col-lg-5 mt-2">
-                <div class="row">
-                  <div class="col-2 align-self-center text-end">in</div>
-                  <div class="col-4">
-                    <input
-                      class="form-control text-center"
-                      type="number"
-                      v-model="reminderDays"
-                      required
-                    />
-                  </div>
-                  <div class="col-6 align-self-center">Days</div>
+              <div class="col-12 col-md-5 mt-2">
+                <div class="hstack gap-3">
+                  <div>in</div>
+                  <input
+                    class="form-control text-center"
+                    type="number"
+                    v-model="reminderDays"
+                    required
+                  />
+                  <div>Days</div>
                 </div>
               </div>
             </div>
