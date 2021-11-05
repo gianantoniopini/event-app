@@ -1,12 +1,15 @@
 <template>
   <div class="container-fluid py-2">
     <div class="row">
-      <div class="d-flex justify-content-center align-items-center fw-bold">
-        Event App
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="hstack gap-1">
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+          <div class="fw-bold">Event App</div>
+        </div>
       </div>
     </div>
     <div class="row my-3">
-      <hr />
+      <hr class="border border-3" />
     </div>
     <EventReminder />
   </div>

@@ -34,8 +34,8 @@
                 <div class="container-fluid rounded text-white bg-dark py-4">
                   <div class="row">
                     <div class="col-12">
-                      <div class="hstack gap-3">
-                        <i class="bi-clock"></i>
+                      <div class="hstack gap-2">
+                        <i class="bi bi-clock"></i>
                         <div class="text-uppercase">Event Date</div>
                       </div>
                     </div>
