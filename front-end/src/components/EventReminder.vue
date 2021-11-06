@@ -59,10 +59,15 @@
             "
           >
             <img
-              src="../assets/disco-lights-small-resized.jpg"
+              src="../assets/disco-lights-small.jpg"
+              width="640"
+              height="512"
+              srcset="
+                ../assets/disco-lights-small.jpg   640w,
+                ../assets/disco-lights-medium.jpg 1920w,
+                ../assets/disco-lights-large.jpg  2400w
+              "
               class="img-fluid rounded"
-              width="256"
-              height="385"
               alt="Assorted color disco lights"
             />
           </div>
