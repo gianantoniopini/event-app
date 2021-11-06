@@ -61,6 +61,9 @@
             <img
               src="../assets/disco-lights-small-resized.jpg"
               class="img-fluid rounded"
+              width="256"
+              height="385"
+              alt="Assorted color disco lights"
             />
           </div>
         </div>
@@ -86,6 +89,7 @@
                   data-toggle="tooltip"
                   :title="this.validationErrors.reminderDateTime"
                   required
+                  aria-label="Reminder date"
                 />
                 <div class="invalid-feedback">
                   {{ this.validationErrors.reminderDateTime }}
@@ -102,6 +106,7 @@
                   data-toggle="tooltip"
                   :title="this.validationErrors.reminderDateTime"
                   required
+                  aria-label="Reminder time"
                 />
               </div>
               <div class="col-12 col-md-5 mt-2">
@@ -112,6 +117,7 @@
                     type="number"
                     v-model="reminderDays"
                     required
+                    aria-label="Reminder days"
                   />
                   <div>Days</div>
                 </div>
@@ -129,6 +135,7 @@
                   data-toggle="tooltip"
                   :title="this.validationErrors.reminderEmail"
                   placeholder="Enter your email"
+                  aria-label="Email"
                 />
                 <div class="invalid-feedback">
                   {{ this.validationErrors.reminderEmail }}
