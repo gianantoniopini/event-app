@@ -2,16 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-8 offset-lg-2">
-        <EventDetails
-          v-bind:eventDateTime="this.eventDateTime"
-          v-bind:eventTimeZone="this.eventTimeZone"
-        />
+        <EventDetails v-bind:event="this.event" />
         <div class="row mt-2 my-md-5">
           <div class="col-12">
             <hr />
           </div>
         </div>
-        <EventReminder v-bind:eventDateTime="this.eventDateTime" />
+        <EventReminder v-bind:eventDateTime="this.event.dateTime" />
       </div>
     </div>
   </div>
@@ -20,6 +17,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { zonedTimeToUtc } from "date-fns-tz";
+import EventInterface from "../interfaces/Event";
 import EventDetails from "./EventDetails.vue";
 import EventReminder from "./EventReminder.vue";
 
@@ -33,17 +31,25 @@ export default defineComponent({
 
   data() {
     return {
-      eventDateTime: new Date(),
-      eventTimeZone: "",
+      event: {
+        city: "Zurich",
+        location: "Letzigrund Station, Zurich",
+        venue: "Letzigrund stadium",
+        continent: "Europe",
+        band: "The Rolling Stones",
+        tour: "On Fire",
+        timeZone: "Europe/Berlin",
+        season: "Winter",
+        dateTime: new Date(),
+      } as EventInterface,
     };
   },
 
   methods: {
     setEventDateTime() {
-      this.eventTimeZone = "Europe/Berlin";
-      this.eventDateTime = zonedTimeToUtc(
+      this.event.dateTime = zonedTimeToUtc(
         "2021-12-17 18:00:00.000",
-        this.eventTimeZone
+        this.event.timeZone
       );
     },
   },

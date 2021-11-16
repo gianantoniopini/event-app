@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-12 col-md-5">
       <div class="row">
-        <div class="col-12 fw-light">Letzigrund Station, Zurich</div>
+        <div class="col-12 fw-light">{{ event.location }}</div>
       </div>
       <div class="row">
         <div class="col-12">
           <div class="hstack gap-3">
-            <span class="fs-3 text-nowrap">The Rolling Stones</span>
+            <span class="fs-3 text-nowrap">{{ event.band }}</span>
             <span class="rounded bg-primary text-white text-nowrap m-1 p-1">
               top event
             </span>
@@ -16,11 +16,13 @@
       </div>
       <div class="row mt-4">
         <div class="col-12">
-          The stones roll through Europe this winter - The Rolling Stones will
-          play at the Letzigrund stadium on
-          {{ eventDateFormattedLong }}. On their "On Fire" tour, they will also
-          make a stop in Zurich at the beginning of the winter... A heater and
-          ticket prices are not yet known. We will inform you here and on social
+          The stones roll through {{ event.continent }} this
+          {{ event.season.toLowerCase() }} - {{ event.band }} will play at the
+          {{ event.venue }} on {{ eventDateFormattedLong }}. On their "{{
+            event.tour
+          }}" tour, they will also make a stop in {{ event.city }} at the
+          beginning of the {{ event.season.toLowerCase() }}... As theater and
+          ticket prices are not yet known, we will inform you here and on social
           media. So check back from time to time.
         </div>
       </div>
@@ -63,26 +65,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { format as tzFormat, utcToZonedTime } from "date-fns-tz";
+import EventInterface from "../interfaces/Event";
 
 export default defineComponent({
   name: "EventDetails",
 
   props: {
-    eventDateTime: {
-      type: Date,
-      required: true,
-    },
-    eventTimeZone: {
-      type: String,
+    event: {
+      type: Object as PropType<EventInterface>,
       required: true,
     },
   },
 
   computed: {
     zonedEventDateTime(): Date {
-      return utcToZonedTime(this.eventDateTime.getTime(), this.eventTimeZone);
+      return utcToZonedTime(this.event.dateTime.getTime(), this.event.timeZone);
     },
 
     eventDateFormattedLong(): string {
