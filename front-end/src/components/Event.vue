@@ -2,76 +2,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-8 offset-lg-2">
-        <div class="row">
-          <div class="col-sm-12 col-md-5">
-            <div class="row">
-              <div class="col-12 fw-light">Letzigrund Station, Zurich</div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="hstack gap-3">
-                  <span class="fs-3 text-nowrap">The Rolling Stones</span>
-                  <span
-                    class="rounded bg-primary text-white text-nowrap m-1 p-1"
-                  >
-                    top event
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="col-12">
-                The stones roll through Europe this winter - The Rolling Stones
-                will play at the Letzigrund stadium on
-                {{ eventDateFormattedLong }}. On their "On Fire" tour, they will
-                also make a stop in Zurich at the beginning of the winter... A
-                heater and ticket prices are not yet known. We will inform you
-                here and on social media. So check back from time to time.
-              </div>
-            </div>
-            <div class="row mt-2 mt-md-5">
-              <div class="col-12">
-                <div class="container-fluid rounded text-white bg-dark py-4">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="hstack gap-2">
-                        <i class="bi bi-clock"></i>
-                        <div class="text-uppercase">Event Date</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12 fw-bold">
-                      {{ eventDateFormattedShort }} | {{ eventTimeFormatted }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2"></div>
-          <div
-            class="
-              col-sm-12 col-md-5
-              mt-2 mt-md-0
-              d-flex
-              justify-content-md-end
-            "
-          >
-            <img
-              src="../assets/disco-lights-small.jpg"
-              width="640"
-              height="512"
-              srcset="
-                ../assets/disco-lights-small.jpg   640w,
-                ../assets/disco-lights-medium.jpg 1920w,
-                ../assets/disco-lights-large.jpg  2400w
-              "
-              class="img-fluid rounded"
-              alt="Assorted color disco lights"
-            />
-          </div>
-        </div>
+        <EventDetails
+          v-bind:eventDateTime="this.eventDateTime"
+          v-bind:eventTimeZone="this.eventTimeZone"
+        />
         <div class="row mt-2 mt-md-5">
           <div class="col-12">
             <hr />
@@ -172,21 +106,20 @@ import { format } from "date-fns";
 import add from "date-fns/add";
 import parseISO from "date-fns/parseISO";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import {
-  zonedTimeToUtc,
-  format as tzFormat,
-  utcToZonedTime,
-} from "date-fns-tz";
+import { zonedTimeToUtc } from "date-fns-tz";
+import EventDetails from "./EventDetails.vue";
 
 export default defineComponent({
   name: "Event",
 
+  components: {
+    EventDetails,
+  },
+
   data() {
     return {
       eventDateTime: new Date(),
-      eventDateFormattedLong: "",
-      eventDateFormattedShort: "",
-      eventTimeFormatted: "",
+      eventTimeZone: "",
       reminderDate: "",
       reminderTime: "13:00",
       reminderDays: 5,
@@ -266,28 +199,10 @@ export default defineComponent({
     },
 
     setEventDateTime() {
-      const eventTimeZone = "Europe/Berlin";
+      this.eventTimeZone = "Europe/Berlin";
       this.eventDateTime = zonedTimeToUtc(
         "2021-12-17 18:00:00.000",
-        eventTimeZone
-      );
-
-      const zonedEventDateTime = utcToZonedTime(
-        this.eventDateTime.getTime(),
-        eventTimeZone
-      );
-
-      this.eventDateFormattedLong = tzFormat(
-        zonedEventDateTime.getTime(),
-        "EEEE, MMM dd yyyy"
-      );
-      this.eventDateFormattedShort = tzFormat(
-        zonedEventDateTime.getTime(),
-        "EEE dd. MMM"
-      );
-      this.eventTimeFormatted = tzFormat(
-        zonedEventDateTime.getTime(),
-        "HH:mm aa"
+        this.eventTimeZone
       );
     },
 
