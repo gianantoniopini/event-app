@@ -36,7 +36,7 @@ export default defineComponent({
         location: "Letzigrund Station, Zurich",
         venue: "Letzigrund stadium",
         continent: "Europe",
-        band: "The Rolling Stones",
+        band: this.getRandomBand(),
         tour: "On Fire",
         timeZone: "Europe/Berlin",
         season: "Winter",
@@ -46,6 +46,17 @@ export default defineComponent({
   },
 
   methods: {
+    getRandomBand(): string {
+      const bands = [
+        "The Crazy Cows",
+        "The Fat Horses",
+        "The Mad Plunkers",
+        "The Smart Bees",
+      ];
+
+      return bands[Math.floor(Math.random() * bands.length)];
+    },
+
     setEventDateTime() {
       this.event.dateTime = zonedTimeToUtc(
         "2021-12-17 18:00:00.000",
