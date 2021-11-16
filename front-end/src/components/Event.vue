@@ -16,6 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { format } from "date-fns";
+import add from "date-fns/add";
 import { zonedTimeToUtc } from "date-fns-tz";
 import EventInterface from "../interfaces/Event";
 import EventDetails from "./EventDetails.vue";
@@ -58,8 +60,11 @@ export default defineComponent({
     },
 
     setEventDateTime() {
+      const eventDate = add(new Date(), { months: 3 });
+      const eventDateFormatted = format(eventDate, "yyyy-MM-dd");
+
       this.event.dateTime = zonedTimeToUtc(
-        "2021-12-17 18:00:00.000",
+        `${eventDateFormatted} 18:00:00.000`,
         this.event.timeZone
       );
     },
