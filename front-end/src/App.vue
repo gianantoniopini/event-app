@@ -11,18 +11,18 @@
     <div class="row my-3">
       <hr class="border border-3" />
     </div>
-    <EventReminder />
+    <Event />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import EventReminder from "./components/EventReminder.vue";
+import Event from "./components/Event.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    EventReminder,
+    Event,
   },
 });
 </script>

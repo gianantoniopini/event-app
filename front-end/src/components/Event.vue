@@ -179,7 +179,7 @@ import {
 } from "date-fns-tz";
 
 export default defineComponent({
-  name: "EventReminder",
+  name: "Event",
 
   data() {
     return {
