@@ -1,4 +1,4 @@
-export default interface Event {
+export default interface EventDetails {
   city: string;
   location: string;
   venue: string;

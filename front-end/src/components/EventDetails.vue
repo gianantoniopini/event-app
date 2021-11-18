@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-12 col-md-5">
       <div class="row">
-        <div class="col-12 fw-light">{{ event.location }}</div>
+        <div class="col-12 fw-light">{{ eventDetails.location }}</div>
       </div>
       <div class="row">
         <div class="col-12">
           <div class="hstack gap-3">
-            <span class="fs-3 text-nowrap">{{ event.band }}</span>
+            <span class="fs-3 text-nowrap">{{ eventDetails.band }}</span>
             <span class="rounded bg-primary text-white text-nowrap m-1 p-1">
               top event
             </span>
@@ -16,14 +16,14 @@
       </div>
       <div class="row mt-4">
         <div class="col-12">
-          The stones roll through {{ event.continent }} this
-          {{ event.season.toLowerCase() }} - {{ event.band }} will play at the
-          {{ event.venue }} on {{ eventDateFormattedLong }}. On their "{{
-            event.tour
-          }}" tour, they will also make a stop in {{ event.city }} at the
-          beginning of the {{ event.season.toLowerCase() }}... As theater and
-          ticket prices are not yet known, we will inform you here and on social
-          media. So check back from time to time.
+          The stones roll through {{ eventDetails.continent }} this
+          {{ eventDetails.season.toLowerCase() }} - {{ eventDetails.band }} will
+          play at the {{ eventDetails.venue }} on {{ eventDateFormattedLong }}.
+          On their "{{ eventDetails.tour }}" tour, they will also make a stop in
+          {{ eventDetails.city }} at the beginning of the
+          {{ eventDetails.season.toLowerCase() }}... As theater and ticket
+          prices are not yet known, we will inform you here and on social media.
+          So check back from time to time.
         </div>
       </div>
       <div class="row mt-2 mt-md-5">
@@ -67,21 +67,24 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { format as tzFormat, utcToZonedTime } from "date-fns-tz";
-import EventInterface from "../interfaces/Event";
+import EventDetailsInterface from "../interfaces/EventDetails";
 
 export default defineComponent({
   name: "EventDetails",
 
   props: {
-    event: {
-      type: Object as PropType<EventInterface>,
+    eventDetails: {
+      type: Object as PropType<EventDetailsInterface>,
       required: true,
     },
   },
 
   computed: {
     zonedEventDateTime(): Date {
-      return utcToZonedTime(this.event.dateTime.getTime(), this.event.timeZone);
+      return utcToZonedTime(
+        this.eventDetails.dateTime.getTime(),
+        this.eventDetails.timeZone
+      );
     },
 
     eventDateFormattedLong(): string {

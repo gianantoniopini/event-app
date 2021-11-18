@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-8 offset-lg-2">
-        <EventDetails v-bind:event="this.event" />
+        <EventDetails v-bind:eventDetails="this.eventDetails" />
         <div class="row mt-2 my-md-5">
           <div class="col-12">
             <hr />
           </div>
         </div>
-        <EventReminder v-bind:eventDateTime="this.event.dateTime" />
+        <EventReminder v-bind:eventDateTime="this.eventDetails.dateTime" />
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@ import { defineComponent } from "vue";
 import { format } from "date-fns";
 import add from "date-fns/add";
 import { zonedTimeToUtc } from "date-fns-tz";
-import EventInterface from "../interfaces/Event";
+import EventDetailsInterface from "../interfaces/EventDetails";
 import EventDetails from "./EventDetails.vue";
 import EventReminder from "./EventReminder.vue";
 
@@ -33,7 +33,7 @@ export default defineComponent({
 
   data() {
     return {
-      event: {
+      eventDetails: {
         city: "Zurich",
         location: "Letzigrund Station, Zurich",
         venue: "Letzigrund stadium",
@@ -43,7 +43,7 @@ export default defineComponent({
         timeZone: "Europe/Berlin",
         season: "Winter",
         dateTime: new Date(),
-      } as EventInterface,
+      } as EventDetailsInterface,
     };
   },
 
@@ -63,9 +63,9 @@ export default defineComponent({
       const eventDate = add(new Date(), { months: 3 });
       const eventDateFormatted = format(eventDate, "yyyy-MM-dd");
 
-      this.event.dateTime = zonedTimeToUtc(
+      this.eventDetails.dateTime = zonedTimeToUtc(
         `${eventDateFormatted} 18:00:00.000`,
-        this.event.timeZone
+        this.eventDetails.timeZone
       );
     },
   },
