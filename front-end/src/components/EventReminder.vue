@@ -91,6 +91,7 @@ import { format } from "date-fns";
 import add from "date-fns/add";
 import parseISO from "date-fns/parseISO";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
+import { createToast } from "mosha-vue-toastify";
 
 export default defineComponent({
   name: "EventReminder",
@@ -183,7 +184,13 @@ export default defineComponent({
         return;
       }
 
-      console.log("submitting form values...");
+      // TODO
+      // Send reminder email
+
+      createToast(`Reminder email has been sent to ${this.reminderEmail}`, {
+        type: "info",
+        position: "bottom-right",
+      });
     },
 
     validateReminderDateTime() {
